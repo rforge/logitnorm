@@ -1,0 +1,53 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+Use the following R commands to sweave this file:
+library(R2HTML)
+Sweave("index.snw.html",driver=RweaveHTML())
+!-->		
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
+
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>logitnorm</title>
+	<link href="http://r-forge.r-project.org/themes/rforge/styles/estilo1.css" rel="stylesheet" type="text/css" />
+  </head>
+
+<body>
+	
+<h1>logitnorm</h1>	
+
+Utilities for the <a href="http://www.economia.unimore.it/frederic_patrizio/Hidden/Papers/2008%20Frederic-Lad%20Comm%20Stat%20Revised.pdf">logitnormal distribution</a>
+<\br> (Frederic, P. & Lad, F. (2008) Two Moments of the Logitnormal Distribution. Communications in Statistics-Simulation and Computation, New York: M. Dekker, c1976-, 37, 1263-1269)
+
+<ul>
+<li>Density, distribution, quantile and random generation function.</li>
+<li>Estimation of the mode and the first two moments.</li>
+<li>Estimation of distribution parameters.</li> 
+</ul>
+
+The logitnormal distribution is useful as a prior density for variables that are bounded
+between 0 and 1, such as proportions.
+
+<!-- source("genPlots.R") -->
+
+<!-- begin{Schunk} !-->
+<!-- begin{Sinput} !-->
+
+<p><xmp class=command>> Sweave("example2.snw", driver = RweaveHTML(), cssfile = "pastel.css")</xmp></p>
+
+
+<!--\end{Sinput}!-->
+
+<!--\end{Schunk}!-->
+
+The moments have no analytical solution. This package estimates them
+by numerical integration.
+
+
+
+<p> The <strong>project summary page</strong> you can find <a href="http://r-forge.r-project.org/projects/logitnorm/"><strong>here</strong></a>. </p>
+Last update: <Sexpr format(Sys.time())>
+</body>
+</html>
