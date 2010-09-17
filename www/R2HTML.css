@@ -1,0 +1,30 @@
+#body { 	background:blue;	} 
+
+p.caption{font-style:italic; color:red}
+.title2{ font-family: Arial, Helvetica, sans-serif; font-size: 14pt; font-style: normal; font-weight: bold; color: #004080  }
+
+
+
+.partitle{
+	font-family : verdana, arial;
+	font-weight:bold
+}
+
+DIV.Sinput{background-color:#FFFAEE; color:#004080; font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; padding:4px}
+
+DIV.Sinput p {margin: 0px; border: 0px; padding: 0px;}
+DIV.Sinput p xmp { margin: 0px; border: 0px; padding: 0px; }
+
+TR{font-family: Arial, Helvetica,Times, Helvetica, sans-serif; font-size: 10pt; font-style: normal  ; padding:0 0}
+TR.firstline{color: #FFFFFF; background: #6389B5;text-align:center;font-weight: bold}
+
+TR.ListBackTitle{color: #FFFFFF; background: #6389B5;text-align:left;font-weight: bold}
+
+
+TD{background:#FFFFFF; padding:0; color:#3271BA }
+TD.ListBackMain{background: #E0E0E0; padding:0 }
+TD.firstcolumn{padding:5px ;background:#D6E9FF;text-align:right}
+TD.cellinside{padding:5px ;background:#FFFFFF;text-align:right}
+
+
+

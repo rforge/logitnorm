@@ -5,7 +5,10 @@
 Use the following R commands to sweave this file:
 library(R2HTML)
 Sweave("index.snw.html",driver=RweaveHTML())
-file.copy("index.snw.html.html","index.html",overwrite = TRUE)
+A <- readLines(file("index.snw.html.html"))
+A1 <- gsub("(<!-- begin\\{Sinput} !--.)",'\\1 <div class="Sinput">',A)
+A2 <- gsub("(<!--[ \\]*end\\{Sinput}.?!--.)",'</div> \\1',A1)
+writeLines(con=file("index.html"), text=A2)
 !-->	
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
@@ -13,7 +16,9 @@ file.copy("index.snw.html.html","index.html",overwrite = TRUE)
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>logitnorm</title>
-	<link href="http://r-forge.r-project.org/themes/rforge/styles/estilo1.css" rel="stylesheet" type="text/css" />
+	<!-- obscures tables link rel="stylesheet" type="text/css" href="https://r-forge.r-project.org/themes/rforge/css/theme.css" /-->
+	<link href="Rforge_theme.css" rel="stylesheet" type="text/css">
+	<link href="R2HTML.css" rel="stylesheet" type="text/css">
   </head>
 
 <body>
@@ -28,6 +33,13 @@ Utilities for the <a href="http://en.wikipedia.org/wiki/Logitnormal">logitnormal
 <li>Estimation of distribution parameters.</li> 
 </ul>
 
+<h2>Download/Install</h2>
+
+<ul><li>from <a href="https://r-forge.r-project.org/R/?group_id=886">download page</a> on R-Forge</li>
+<li>To install this package directly within R type: 
+   <strong><code>install.packages("logitnorm", repos="http://R-Forge.R-project.org")</code></strong>
+</li>
+</ul>
 
 <h2>Distribution</h2>
 The logitnormal distribution is useful as a prior density for variables that are bounded
@@ -65,17 +77,30 @@ n <- nrow(theta0)
 }
 @
 
-<<fig =TRUE , echo =FALSE, width=500,height=330, align=left, caption=Fig. 1 Density for for various combinations of mu and sigma. >>=
+<<fig =TRUE , echo =FALSE, width=600,height=430, align=left, caption=Fig. 1 Density for for various combinations of mu and sigma. >>=
 ds <- .calcDensityGrid(theta0,xGrid=xGrid)
 print(qplot(xGrid,value,data=ds, geom="line", color=sigma, ylab="density")+ facet_wrap(~mu,scales="free")+opts(axis.title.x = theme_blank()))
 @
+
+<p>Example:
+Plot the cumulative distribution 
+</p>
+
+<<fig =TRUE, echo =TRUE, width=250,height=200, align=left>>=
+x <- seq(0,1, length.out=81)
+d <- plogitnorm(x, mu=0.5, sigma=0.5)
+plot(d~x,type="l")
+@
+
 
 <h2>Mean and Variance</h2>
 The moments have no analytical solution. This package estimates them
 by numerical integration:
 
-<p>Example:</p>
+<p>
+Example:
 estimate mean and standard deviation.
+</p>
 
 <<>>=
 (theta <- momentsLogitnorm(mu=0.6,sigma=0.5))
@@ -88,7 +113,10 @@ the resulting equation:
 <br/><img src="modeEq.png" alt="logit(x) = \sigma^2(2x-1)+\mu" />
 
 
-<p>Example</p>
+<p>
+Example:
+estimate the mode
+</p>
 <<>>=
 # estimate the mode
 (mle <- modeLogitnorm(mu=0.6,sigma=0.5))
@@ -103,8 +131,10 @@ from upper quantile and
 <li>median</li>
 </ul>
 
-<br/>Example:
+<p>
+Example:
 estimate the parameters, with mode 0.7 and upper quantile 0.9
+</p>
 
 <<>>=
 (theta <- twCoefLogitnormMLE(0.7,0.9))

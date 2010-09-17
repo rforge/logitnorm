@@ -18,7 +18,7 @@ n <- nrow(theta0)
 	,xGrid = seq(0,1, length.out=81)[-c(1,81)]
 ){ 
 	dx <- apply( theta0, 1, function(theta0i){
-			dx <- dlogitnorm(xGrid, mean=theta0i[1], sd=theta0i[2])
+			dx <- dlogitnorm(xGrid, mu=theta0i[1], sigma=theta0i[2])
 		})
 	dimnames(dx) <- list(iX=NULL,iTheta=NULL)
 	ds <- melt(dx)
@@ -36,7 +36,7 @@ n <- nrow(theta0)
 	,xGrid = seq(0,1, length.out=81)[-c(1,81)]
 ){ 
 	dx <- apply( theta0, 1, function(theta0i){
-			dx <- plogitnorm(xGrid, mean=theta0i[1], sd=theta0i[2])
+			dx <- plogitnorm(xGrid, mu=theta0i[1], sigma=theta0i[2])
 		})
 	dimnames(dx) <- list(iX=NULL,iTheta=NULL)
 	ds <- melt(dx)
@@ -76,36 +76,36 @@ theta0 <- cbind(mu,sigma=as.numeric(sqrt(sigma2)))
 
 ds <- .calcDensityGrid(theta0,xGrid=xGrid)
 qplot(xGrid,value,data=ds, geom="line", color=mu )
-qlogitnorm(p=0.975,mean=theta0[,1],sd=theta0[,2])
-qlogitnorm(p=0.99,mean=theta0[,1],sd=theta0[,2])
+qlogitnorm(p=0.975,mu=theta0[,1],sigma=theta0[,2])
+qlogitnorm(p=0.99,mu=theta0[,1],sigma=theta0[,2])
 
 mle=0.8
 #mtrace(.ofLogitnormMLE)
 plot( .ofLogitnormMLE(mu,mle=mle,quant=0.95,perc=0.999) ~ mu) 
 #mtrace(twCoefLogitnormMLE)
 theta <- twCoefLogitnormMLE( mle=mle,quant=0.95,perc=0.99)
-plot( dlogitnorm(xGrid,mean=theta[1],sd=theta[2])~xGrid, type="l")
+plot( dlogitnorm(xGrid,mu=theta[1],sigma=theta[2])~xGrid, type="l")
 c( (logit(mle)-theta[1])/(2*mle-1), theta[2]^2 )
 abline(v=c(mle,0.99),col="gray")
 
 mle=0.5
 #mtrace(twCoefLogitnormMLE)
 theta <- twCoefLogitnormMLE( mle=mle,quant=0.99,perc=0.999)
-q2 <- qlogitnorm(0.999,mean=theta[1],sd=theta[2])
-plot( dlogitnorm(xGrid,mean=theta[1],sd=theta[2])~xGrid, type="l")
+q2 <- qlogitnorm(0.999,mu=theta[1],sigma=theta[2])
+plot( dlogitnorm(xGrid,mu=theta[1],sigma=theta[2])~xGrid, type="l")
 abline(v=c(mle,q2),col="gray")
 
 mle=0.1
 #mtrace(twCoefLogitnormMLE)
 theta <- twCoefLogitnormMLE( mle=mle,quant=0.5,perc=0.99)
-quant2 <- qlogitnorm(0.99,mean=theta[1],sd=theta[2])
-plot( dlogitnorm(xGrid,mean=theta[1],sd=theta[2])~xGrid, type="l")
+quant2 <- qlogitnorm(0.99,mu=theta[1],sigma=theta[2])
+plot( dlogitnorm(xGrid,mu=theta[1],sigma=theta[2])~xGrid, type="l")
 abline(v=c(mle,quant2),col="gray")
 
 mle=0.9
 #mtrace(twCoefLogitnormMLE)
 theta <- twCoefLogitnormMLE( mle=mle,quant=0.98,perc=0.99)
 #theta <- twCoefLogitnormMLE( mle=mle,quant=0.99,perc=0.999)
-quant2 <- qlogitnorm(0.99,mean=theta[1],sd=theta[2])
-plot( dlogitnorm(xGrid,mean=theta[1],sd=theta[2])~xGrid, type="l")
+quant2 <- qlogitnorm(0.99,mu=theta[1],sigma=theta[2])
+plot( dlogitnorm(xGrid,mu=theta[1],sigma=theta[2])~xGrid, type="l")
 abline(v=c(mle,quant2),col="gray")
