@@ -9,7 +9,6 @@ A <- readLines(file("index.snw.html.html"))
 A1 <- gsub("(<!-- begin\\{Sinput} !--.)",'\\1 <div class="Sinput">',A)
 A2 <- gsub("(<!--[ \\]*end\\{Sinput}.?!--.)",'</div> \\1',A1)
 writeLines(con=file("index.html"), text=A2)
-#file.copy("index.snw.html.html","index.html",overwrite = TRUE)
 !-->	
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
@@ -42,6 +41,23 @@ Utilities for the <a href="http://en.wikipedia.org/wiki/Logitnormal">logitnormal
 </li>
 </ul>
 
+<h2>Documentaion</h2>
+The package comes with documentaion and examples. 
+Within R type:
+<!-- begin{Schunk} !-->
+<!-- begin{Sinput} !--> <div class="Sinput">
+
+<p><xmp class=command>> library(logitnorm)</xmp></p>
+
+
+
+<p><xmp class=command>> `?`(logitnorm)</xmp></p>
+
+
+</div> <!--\end{Sinput}!-->
+
+<!--\end{Schunk}!-->
+
 <h2>Distribution</h2>
 The logitnormal distribution is useful as a prior density for variables that are bounded
 between 0 and 1, such as proportions. Fig. 1 displays its density for various combinations of 
@@ -50,7 +66,7 @@ parameters mu and sigma.
 
 
 
-<p align='left'><img height= width= src='index.snw.html-002.png'><br><font class='caption='>Fig. 1 Density for for various combinations of mu and sigma.</font></p>
+<p align='left'><img height= width= src='index.snw.html-003.png'><br><font class='caption='>Fig. 1 Density for for various combinations of mu and sigma.</font></p>
 <p>Example:
 Plot the cumulative distribution 
 </p>
@@ -72,7 +88,7 @@ Plot the cumulative distribution
 </div> <!--\end{Sinput}!-->
 
 <!--\end{Schunk}!-->
-<p align='left'><img height= width= src='index.snw.html-003.png'></p>
+<p align='left'><img height= width= src='index.snw.html-004.png'></p>
 
 <h2>Mean and Variance</h2>
 The moments have no analytical solution. This package estimates them
