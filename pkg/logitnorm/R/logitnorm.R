@@ -51,10 +51,9 @@ dlogitnorm <- function(
         ### Density function of logitnormal distribution	
         q		##<< quantiles
         ,mu = 0, sigma = 1	##<< distribution parameters
+        ,log = FALSE    ##<< if TRUE, the log-density is returned
         ,...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, and \code{sd} for mu and sigma respectively.  
 ){
-    ##alias<< logitnorm
-    
     ##details<< \describe{\item{Logitnorm distribution}{ 
     ## \itemize{
     ## \item{density function: dlogitnorm }
@@ -63,35 +62,15 @@ dlogitnorm <- function(
     ## \item{random generation function: \code{\link{rlogitnorm}} }
     ## }
     ## }}
-    
-    ##details<< \describe{\item{Transformation functions}{ 
-    ## \itemize{
-    ## \item{ (0,1) -> (-Inf,Inf): \code{\link{logit}} }
-    ## \item{ (-Inf,Inf) -> (0,1): \code{\link{invlogit}} }
-    ## }
-    ## }}
-    
-    ##details<< \describe{\item{Moments and mode}{ 
-    ## \itemize{
-    ## \item{ Expected value and variance: \code{\link{momentsLogitnorm}} }
-    ## \item{ Mode: \code{\link{modeLogitnorm}} }
-    ## }
-    ## }}
-    
-    ##details<< \describe{\item{Estimating parameters}{ 
-    ## \itemize{
-    ## \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
-    ## \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
-    ## \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
-    ## \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }
-    ## \item{from prescribed quantiles: \code{\link{twCoefLogitnormN}} }
-    ## }
-    ## }}
-    
-    ##detail<< log=TRUE does not work. Please use \code{log(dlogitnorm(...))}
+	##seealso<< \code{\link{logitnorm}}
     
     ql <- qlogis(q)
-    dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)	# multiply by the Jacobian (derivative) of the back-Transformation (logit)
+    # multiply (or add in the log domain) by the Jacobian (derivative) of the back-Transformation (logit)
+    if (log) {
+        dnorm(ql,mean=mu,sd=sigma,log=TRUE,...) - log(q) - log1p(-q)
+    } else {
+        dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)
+    }
 }
 
 qlogitnorm <- function(
@@ -315,7 +294,19 @@ attr(twCoefLogitnormMLE,"ex") <- function(){
 	(theta <- twCoefLogitnormMLE(mle=seq(0.4,0.8,by=0.1),quant=0.9))
     
     # flat
-    (theta <- twCoefLogitnormMLE(0.7,0))
+    (theta <- twCoefLogitnormMLEFlat(0.7))
+}
+
+twCoefLogitnormMLEFlat <- function(
+		### Estimating coefficients of a maximally flat unimodal logitnormal distribution from mode 	
+		mle						##<< numeric vector: the mode of the density function
+){
+	##details<<
+	## When increasing the sigma parameter, the distribution becomes
+	## eventually becomes bi-model, i.e. has two maxima.	
+	## This function estimates parameters for given mode, so that the distribution assigns high  
+	## densitiy to a maximum range, i.e. is maximally flat, but still is unimodal.
+	twCoefLogitnormMLE(mle,0)
 }
 
 .ofLogitnormE <- function(
